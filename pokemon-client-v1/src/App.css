@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-logo {
@@ -26,24 +27,6 @@
 
 .App-link {
   color: #61dafb;
-}
-
-.type-icon {
-  border-radius: 5;
-  width: 90px;
-  height: 30px;
-  color: aliceblue;
-  border-radius: 10px;
-}
-
-.type-ground {
-  background-color: #bd7c51;
-  outline: 2px solid #87512d;
-}
-
-.type-poison {
-  background-color: #9642c0;
-  outline: 2px solid #762c9c;
 }
 
 @keyframes App-logo-spin {

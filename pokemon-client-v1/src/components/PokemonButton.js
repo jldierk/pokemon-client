@@ -17,7 +17,7 @@ class PokemonButton extends React.Component {
             row: {
                 display: 'inline-flex',
                 paddingLeft: '5px',
-                alignItems: 'center'
+                alignItems: 'right',
             }
         }
 
