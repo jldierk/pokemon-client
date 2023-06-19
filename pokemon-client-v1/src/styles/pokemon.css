@@ -103,3 +103,13 @@ span {
     background-color: #cfd45f;
     outline: 2px solid #b1b73f;
 }
+
+.pokemonButton {
+    margin-top: 5;
+    background-color: '#32a887';
+    padding: 5;
+    font-size: 20;
+    color: 'white';
+    width: '200px';
+    border-radius: 10;
+  }

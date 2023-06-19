@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import {motion} from 'framer-motion';
 import { ScrollView, View } from 'react-native-web';
 import './App.css';
 import PokemonButton from './components/PokemonButton.js'
 import PokemonDetailView from './components/PokemonDetailView';
-import SelectedPokemon from './components/SelectedPokemon';
+import AddToPartyBtn from './components/AddToPartyBtn';
+import Party from './components/Party';
+import './styles/common.css'
+
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [party, setParty] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState("");
   
   function updateSelected(pokemonName) {
     setSelectedPokemon(pokemonName);
+  }
+
+  function addToParty(pokemonName) {
+    console.log("Adding " + pokemonName + ", party size is " + [party.length]);
+    if (party.length > 5) {
+      console.log("too many in party");
+    } else {
+      setParty(party => [...party, pokemonName]);
+    }
   }
 
   useEffect(() => {
@@ -53,29 +65,19 @@ function App() {
             <div style={{fontSize: "50px", color: "white", border: "2px solid red", flex: "0 1 auto"}}>
               Pokemon Party Creator
             </div>
-            <div style={{flex: "1 1 auto", flexDirection: "column", border: "2px solid blue",justifyContent: "space-between"}}>
-              <div>
+            <div style={{flex: "1 1 auto", flexDirection: "column", border: "2px solid blue",justifyContent: "space-between", alignContent:"center"}}>
+              <div style={{display:"flex"}}>
                 <div style={{display: "inline-block", width: "49%"}}>
                   <PokemonDetailView pokemon={selectedPokemon}/>
                 </div>
-                <div style={{display: "inline-block",border: "2px solid orange", width: "49%"}}>
-                  <div style={{display:"flex", alignItems: "center", height: "100%"}}>
-                    <motion.button style={{backgroundColor: "red"}} onClick=""
-                                whileHover={{scale: 1.1, originX:1}}>
-                                  Add To Party
-                    </motion.button>  
-                  </div>              
+                <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
+                    <AddToPartyBtn onClick={addToParty.bind(this, selectedPokemon)}/>
                 </div>
               </div>        
             </div>  
             <div style={{marginBottom: "20px", flex: "0 1 140px", border: "2px solid yellow"}}>
-                <SelectedPokemon/>
-                <SelectedPokemon/>
-                <SelectedPokemon/>
-                <SelectedPokemon/>
-                <SelectedPokemon/>
-                <SelectedPokemon/>
-              </div>        
+              <Party party={party}/>
+            </div>        
           </div>          
         </div>
       </div>

@@ -1,0 +1,49 @@
+.pokemon-button {
+    margin-top: 5;
+    padding: 5;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 20;
+    color: white;
+    width: 200px;
+    border-radius: 10;
+    border: 2px solid #32a887;
+    display: inline-block;
+}
+
+.pokemon-button:hover {
+    background-color: #32a887;
+    color: #11151c;
+}
+
+.pokemon-button td {
+    display: inline-flex;
+    padding-left:5px;
+    align-items: right;
+}
+
+.party-member {
+    height:100px;
+    width:100px;
+    background-color: #393f4c;
+    display: inline-block;
+    border-radius: 50px;
+    vertical-align: bottom;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.party-member div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.add-to-party {
+    background-color: #ea5d5d;
+    height: 50px;
+    width: 125px;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+}
