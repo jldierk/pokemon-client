@@ -30,6 +30,12 @@ function App() {
     }
   }
 
+  function removeFromParty(selected) {
+    if (party.length >= selected) {
+      setParty([...party.slice(0, selected), ...party.slice(selected+1)]);
+    }
+  }
+
   function handleTypeChange(event) {
     var type = event.target.value;
     console.log("Filtering by " + type);
@@ -57,6 +63,7 @@ function App() {
   return (
     <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
+        {/* Pokemon Selection Column */}
         <div class="column"> 
           <div>
             <PokemonFilter name="Generation:" values={["1","2","3","4","5","6","7","8","9"]} onChange={handleTypeChange}/>
@@ -74,6 +81,8 @@ function App() {
             </ScrollView>                    
           </View>          
         </div>
+
+        {/* Party Column */}
         <div class="column" style={{height: "100%"}}>
           <div style={{display: "flex", flexFlow: "column", height: "100%"}}>
             <div style={{fontSize: "50px", color: "white", border: "2px solid red", flex: "0 1 auto"}}>
@@ -87,12 +96,12 @@ function App() {
                   <PokemonDetailView pokemon={selectedPokemon}/>
                 </div>
                 <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
-                    <AddToPartyBtn onClick={addToParty.bind(this, selectedPokemon)}/>
+                    {selectedPokemon != "" && <AddToPartyBtn onClick={addToParty.bind(this, selectedPokemon)}/>}
                 </div>
               </div>        
             </div>  
             <div style={{marginBottom: "20px", flex: "0 1 140px", border: "2px solid yellow"}}>
-              <Party party={party}/>
+              <Party party={party} removeFunc={removeFromParty}/>
             </div>        
           </div>          
         </div>

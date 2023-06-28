@@ -11,7 +11,7 @@ class PokemonButton extends React.Component {
                     <div style={{float:"left"}}>
                         <img class="img-fixed" src={this.props.imageUrl} alt="Venusaur" width="56" height="42" loading="lazy"></img>
                     </div>                
-                    <div style={{float:"right"}}>
+                    <div style={{float:"right", paddingTop:"5px"}}>
                         {this.props.pokemonName}
                     </div>   
                 </motion.button>                

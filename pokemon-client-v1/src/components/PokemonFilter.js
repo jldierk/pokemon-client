@@ -5,7 +5,7 @@ class PokemonFilter extends React.Component {
         const values = this.props.values;
 
         return (
-            <div style={{marginBottom: "5px 0px 5px 0px"}}>
+            <div style={{margin: "5px 0px 5px 0px"}}>
                 <span style={{color:"white"}}>{this.props.name}</span>
                 <span>
                 <select name="Type" onChange={this.props.onChange.bind(this)}>
