@@ -7,6 +7,7 @@ import AddToPartyBtn from './components/AddToPartyBtn';
 import Party from './components/Party';
 import './styles/common.css'
 import pokeball from './images/pokeball.png';
+import PokemonFilter from './components/PokemonFilter';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
@@ -29,7 +30,7 @@ function App() {
     }
   }
 
-  function handleChange(event) {
+  function handleTypeChange(event) {
     var type = event.target.value;
     console.log("Filtering by " + type);
     setTypeFilter(type);
@@ -54,35 +55,12 @@ function App() {
   }
 
   return (
-    <div className="App" style={{height:"100vh"}}>
+    <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
         <div class="column"> 
           <div>
-            <div style={{margin: "5px 0px 5px 0px"}}>
-              <span style={{color:"white"}}>Generation: </span>
-              <span>
-                <select name="Generation">
-                  <option value="">All</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </span>
-            </div>    
-            <div style={{marginBottom: "5px 0px 5px 0px"}}>
-              <span style={{color:"white"}}>Type: </span>
-              <span>
-                <select name="Type" onChange={handleChange.bind(this)}>
-                  <option value="">All</option>
-                  <option value="Fire">Fire</option>
-                  <option value="Water">Water</option>
-                  <option value="Grass">Grass</option>
-                  <option value="Electric">Electric</option>
-                  <option value="Ground">Ground</option>
-                  <option value="Psychic">Psychic</option>
-                </select>
-              </span>   
-            </div>           
+            <PokemonFilter name="Generation:" values={["1","2","3","4","5","6","7","8","9"]} onChange={handleTypeChange}/>
+            <PokemonFilter name="Type:" values={["Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dark","Dragon","Steel","Fairy"]} onChange={handleTypeChange}/>
           </div> 
           <div style={{height: "2px", width: "100%", backgroundColor:"white", margin: "10px 0px 10px 0px"}}></div>
           <View style={{height: "80vh"}}>
