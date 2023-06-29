@@ -16,9 +16,14 @@ function App() {
   const [selectedPokemon, setSelectedPokemon] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [generationFilter, setGenerationFilter] = useState("");
+  const [selectionOpacity, setSelectionOpacity] = useState(false);
 
-  function updateSelected(pokemonName) {
-    setSelectedPokemon(pokemonName);
+  function updateSelected(pokemon) {
+    setSelectionOpacity(true);        
+    setTimeout(() => {
+      setSelectedPokemon(pokemon);
+      setSelectionOpacity(false);    
+    }, 400);
   }
 
   function addToParty(pokemonName) {
@@ -60,6 +65,9 @@ function App() {
     return <p>Loading...</p>;
   }
 
+  var detailHidden = selectionOpacity ? "hide" : "show";
+  console.log("detail hidden: " + detailHidden);
+
   return (
     <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
@@ -85,15 +93,11 @@ function App() {
         {/* Party Column */}
         <div class="column" style={{height: "100%"}}>
           <div style={{display: "flex", flexFlow: "column", height: "100%"}}>
-            <div style={{fontSize: "50px", color: "white", border: "2px solid red", flex: "0 1 auto"}}>
-              <span><img src={pokeball} style={{height: "50px", marginRight: "10px"}}/></span>
-              <span>Pokemon Party Creator</span>
-              <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>
-            </div>
+            <Banner/>
             <div style={{flex: "1 1 auto", flexDirection: "column", border: "2px solid blue",justifyContent: "space-between", alignContent:"center"}}>
               <div style={{display:"flex"}}>
                 <div style={{display: "inline-block", width: "49%"}}>
-                  <PokemonDetailView pokemon={selectedPokemon}/>
+                  <PokemonDetailView className={detailHidden} pokemon={selectedPokemon}/>
                 </div>
                 <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
                     {selectedPokemon != "" && <AddToPartyBtn onClick={addToParty.bind(this, selectedPokemon)}/>}
@@ -108,6 +112,16 @@ function App() {
       </div>
     </div>
   );
+}
+
+const Banner = () => {
+  return (
+    <div style={{fontSize: "50px", color: "white", border: "2px solid red", flex: "0 1 auto"}}>
+      <span><img src={pokeball} style={{height: "50px", marginRight: "10px"}}/></span>
+      <span>Pokemon Party Creator</span>
+      <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>
+    </div>
+  )
 }
 
 export default App;
