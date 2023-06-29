@@ -9,12 +9,12 @@
     /* border-radius: 10; */
     /* border: 2px solid #32a887; */
     display: inline-block;
+    transition: all .5s ease
 }
 
 .pokemon-button:hover {
     background-color: #32a887;
     color: #11151c;
-    transition: all .5s ease
 }
 
 .pokemon-button td {
@@ -34,7 +34,7 @@
 }
 
 .party-member-background {
-    background-color: #393f4c;
+    background-color: #161b24;
     position: absolute;
     top: 0;
     left: 0;

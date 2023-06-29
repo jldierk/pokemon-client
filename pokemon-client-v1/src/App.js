@@ -14,16 +14,21 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [party, setParty] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState("");
+  const [searchKey, setSearchKey] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [generationFilter, setGenerationFilter] = useState("");
   const [selectionOpacity, setSelectionOpacity] = useState(false);
 
   function updateSelected(pokemon) {
-    setSelectionOpacity(true);        
-    setTimeout(() => {
+    if (selectedPokemon != null && selectedPokemon != "") {
+      setSelectionOpacity(true);        
+      setTimeout(() => {
+        setSelectedPokemon(pokemon);
+        setSelectionOpacity(false);    
+      }, 600);
+    } else {
       setSelectedPokemon(pokemon);
-      setSelectionOpacity(false);    
-    }, 400);
+    }
   }
 
   function addToParty(pokemonName) {
@@ -45,6 +50,11 @@ function App() {
     var type = event.target.value;
     console.log("Filtering by " + type);
     setTypeFilter(type);
+  }
+
+  function handleSearchChange(event) {
+    var key = event.target.value;
+    setSearchKey(key);
   }
 
   useEffect(() => {
@@ -72,15 +82,21 @@ function App() {
     <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
         {/* Pokemon Selection Column */}
-        <div class="column"> 
-          <div>
+        <div class="column select-col"> 
+          <div style={{paddingTop: "10px"}}>
+            <div>
+              <span style={{color:"white", paddingRight: "5px"}}>Search: </span>
+                <span>
+                  <input style={{width: "100px", backgroundColor: "#161b24", color: "white", appearance: "none", border: "1px solid rgb(118, 118, 118)", height: "25px", borderRadius: "5px"}} onChange={handleSearchChange.bind(this)}/>
+                </span>   
+            </div>
             <PokemonFilter name="Generation:" values={["1","2","3","4","5","6","7","8","9"]} onChange={handleTypeChange}/>
             <PokemonFilter name="Type:" values={["Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dark","Dragon","Steel","Fairy"]} onChange={handleTypeChange}/>
           </div> 
-          <div style={{height: "2px", width: "100%", backgroundColor:"white", margin: "10px 0px 10px 0px"}}></div>
+          <div style={{height: "2px", width: "100%", backgroundColor:"#262f42", margin: "10px 0px 10px 0px"}}></div>
           <View style={{height: "80vh"}}>
             <ScrollView>
-              {pokemon.filter(pokemon => typeFilter == "" || typeFilter == pokemon.type[0] || typeFilter == pokemon.type[1]).map(pokemon =>
+              {pokemon.filter(pokemon => matchFilters(pokemon)).map(pokemon =>
                 <div style={{marginLeft: "10px", display: 'block'}}>
                   <PokemonButton pokemonName={pokemon.name.english} imageUrl={pokemon.dexImageUrl} onClick={updateSelected.bind(this, pokemon)}/>
                   <br/>
@@ -105,13 +121,26 @@ function App() {
               </div>        
             </div>  
             <div style={{marginBottom: "20px", flex: "0 1 140px", border: "2px solid yellow"}}>
-              <Party party={party} removeFunc={removeFromParty}/>
+              <div style={{color: "white", textAlign: "left", padding: "10px"}}>
+                Your Party
+              </div>
+              <div style={{position: "relative"}}>
+                <div style={{position: "absolute", top: "0px", left: "0px"}}>
+                  <Party party={party} removeFunc={removeFromParty}/>
+                </div>          
+              </div>            
             </div>        
           </div>          
         </div>
       </div>
     </div>
   );
+
+  function matchFilters(test) {
+    var regex = new RegExp(searchKey, "i");
+    return (typeFilter == "" || typeFilter == test.type[0] || typeFilter == test.type[1])
+    && (searchKey == "" || regex.test(test.name.english));
+  }
 }
 
 const Banner = () => {
