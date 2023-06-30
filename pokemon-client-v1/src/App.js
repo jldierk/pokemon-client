@@ -98,7 +98,6 @@ function App() {
     detailContent = <PartyView/>
   }
 
-
   return (
     <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
