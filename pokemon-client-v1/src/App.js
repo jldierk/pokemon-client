@@ -11,6 +11,9 @@ import PokemonFilter from './components/PokemonFilter';
 import PokemonDataView from './components/PokemonDataView';
 
 function App() {
+  const POKEMON_VIEW = "POKEMON_VIEW";
+  const PARTY_VIEW = "PARTY_VIEW";
+  const [viewMode, setViewMode] = useState("detail");
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(false);
   const [party, setParty] = useState([]);
@@ -21,7 +24,10 @@ function App() {
   const [selectionOpacity, setSelectionOpacity] = useState(false);
 
   function updateSelected(pokemon) {
-    if (selectedPokemon != null && selectedPokemon != "") {
+    if (viewMode != POKEMON_VIEW) {
+      setSelectedPokemon(pokemon);
+      setViewMode(POKEMON_VIEW);
+    } else if (selectedPokemon != null && selectedPokemon != "") {
       setSelectionOpacity(true);        
       setTimeout(() => {
         setSelectedPokemon(pokemon);
@@ -85,6 +91,14 @@ function App() {
   var detailHidden = selectionOpacity ? "hide" : "show";
   console.log("detail hidden: " + detailHidden);
 
+  let detailContent;
+  if (viewMode == POKEMON_VIEW) {
+    detailContent = <PokemonView detailHidden={detailHidden} addToPartyFunc={addToParty} selectedPokemon={selectedPokemon}/>
+  } else {
+    detailContent = <PartyView/>
+  }
+
+
   return (
     <div className="App" style={{height:"100vh", overflow:"scroll"}}>
       <div style={{ height: "100vh",display: "grid", gridTemplateColumns: "1fr 5fr", gridColumnGap: 20, gridRowGap:0 }}>
@@ -118,17 +132,7 @@ function App() {
           <div style={{display: "flex", flexFlow: "column", height: "100%"}}>
             <Banner/>
             <div style={{flex: "1 1 auto", flexDirection: "column", border: "2px solid blue",justifyContent: "space-between", alignContent:"center"}}>
-              <div style={{display:"flex"}}>
-                <div style={{display: "inline-block", width: "49%"}}>
-                  <PokemonDetailView className={detailHidden} pokemon={selectedPokemon}/>
-                  <div style={{paddingTop: "20px"}}>
-                    {selectedPokemon != "" && <ActionButton onClick={addToParty.bind(this, selectedPokemon)} text="Add To Party"/>}
-                  </div>                
-                </div>
-                <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
-                  {selectedPokemon != "" && <PokemonDataView pokemon={selectedPokemon}/>}
-                </div>
-              </div>        
+                {detailContent}
             </div>  
             <div style={{marginBottom: "20px", flex: "0 1 140px", border: "2px solid yellow"}}>
               <div style={{color: "white", textAlign: "left", padding: "10px"}}>
@@ -139,7 +143,7 @@ function App() {
                   <Party party={party} removeFunc={removeFromParty}/>                  
                 </div>          
                 <div style={{marginRight: "20px", verticalAlign: "center"}}>
-                    <ActionButton text="Analyze"/>
+                    <ActionButton text="Analyze" onClick={()=>setViewMode(PARTY_VIEW)}/>
                 </div>
               </div>            
             </div>        
@@ -157,6 +161,34 @@ const Banner = () => {
       <span>Pokemon Party Creator</span>
       <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>
     </div>
+  )
+}
+
+const PokemonView = (props) => {
+  var detailHidden = props.detailHidden;
+  var selectedPokemon = props.selectedPokemon;
+  var addToParty = props.addToPartyFunc;
+
+  return (
+    <div style={{display:"flex"}}>
+      <div style={{display: "inline-block", width: "49%"}}>
+        <PokemonDetailView className={detailHidden} pokemon={selectedPokemon}/>
+        <div style={{paddingTop: "20px"}}>
+          {selectedPokemon != "" && <ActionButton onClick={addToParty.bind(this, selectedPokemon)} text="Add To Party"/>}
+        </div>                
+      </div>
+      <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
+        {selectedPokemon != "" && <PokemonDataView pokemon={selectedPokemon}/>}
+      </div>
+    </div>  
+  )
+}
+
+const PartyView = () => {
+  return (
+    <div style={{display:"flex", color: "white"}}>
+      This is a test
+    </div>  
   )
 }
 
