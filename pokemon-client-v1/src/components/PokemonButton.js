@@ -7,7 +7,7 @@ class PokemonButton extends React.Component {
     render() {
         return (
             <div style={{display: "inline-block"}}>
-                <motion.button className={`pokemon-button`} onClick={this.props.onClick}>
+                <motion.button className="pokemon-button" onClick={this.props.onClick}>
                     <div style={{float:"left"}}>
                         <img class="img-fixed" src={this.props.imageUrl} alt="Venusaur" width="56" height="42" loading="lazy"></img>
                     </div>                

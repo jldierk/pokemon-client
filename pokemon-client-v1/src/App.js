@@ -3,11 +3,12 @@ import { ScrollView, View } from 'react-native-web';
 import './App.css';
 import PokemonButton from './components/PokemonButton.js'
 import PokemonDetailView from './components/PokemonDetailView';
-import AddToPartyBtn from './components/AddToPartyBtn';
+import ActionButton from './components/ActionButton';
 import Party from './components/Party';
 import './styles/common.css'
 import pokeball from './images/pokeball.png';
 import PokemonFilter from './components/PokemonFilter';
+import PokemonDataView from './components/PokemonDataView';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
@@ -55,6 +56,12 @@ function App() {
   function handleSearchChange(event) {
     var key = event.target.value;
     setSearchKey(key);
+  }
+  
+  function matchFilters(test) {
+    var regex = new RegExp(searchKey, "i");
+    return (typeFilter == "" || typeFilter == test.type[0] || typeFilter == test.type[1])
+    && (searchKey == "" || regex.test(test.name.english));
   }
 
   useEffect(() => {
@@ -114,9 +121,12 @@ function App() {
               <div style={{display:"flex"}}>
                 <div style={{display: "inline-block", width: "49%"}}>
                   <PokemonDetailView className={detailHidden} pokemon={selectedPokemon}/>
+                  <div style={{paddingTop: "20px"}}>
+                    {selectedPokemon != "" && <ActionButton onClick={addToParty.bind(this, selectedPokemon)} text="Add To Party"/>}
+                  </div>                
                 </div>
                 <div style={{display: "flex",border: "2px solid orange", width: "49%", justifyContent:"center", alignItems: "center"}}>
-                    {selectedPokemon != "" && <AddToPartyBtn onClick={addToParty.bind(this, selectedPokemon)}/>}
+                  {selectedPokemon != "" && <PokemonDataView pokemon={selectedPokemon}/>}
                 </div>
               </div>        
             </div>  
@@ -124,10 +134,13 @@ function App() {
               <div style={{color: "white", textAlign: "left", padding: "10px"}}>
                 Your Party
               </div>
-              <div style={{position: "relative"}}>
-                <div style={{position: "absolute", top: "0px", left: "0px"}}>
-                  <Party party={party} removeFunc={removeFromParty}/>
+              <div style={{display: "flex", justifyContent:"space-between", alignItems: "center"}}>
+                <div style={{marginLeft: "20px"}}>
+                  <Party party={party} removeFunc={removeFromParty}/>                  
                 </div>          
+                <div style={{marginRight: "20px", verticalAlign: "center"}}>
+                    <ActionButton text="Analyze"/>
+                </div>
               </div>            
             </div>        
           </div>          
@@ -135,12 +148,6 @@ function App() {
       </div>
     </div>
   );
-
-  function matchFilters(test) {
-    var regex = new RegExp(searchKey, "i");
-    return (typeFilter == "" || typeFilter == test.type[0] || typeFilter == test.type[1])
-    && (searchKey == "" || regex.test(test.name.english));
-  }
 }
 
 const Banner = () => {

@@ -6,8 +6,8 @@ class SelectedPokemon extends React.Component {
         return (
             <div className="party-member-container">
                 <div className="party-member-background"/>
-                {this.props.imageUrl && <img className="party-member-icon" src={this.props.imageUrl}></img>}
-                <button className="party-member-remove" onClick={this.props.onClick}></button>
+                {this.props.imageUrl && <img className="party-member-icon" src={this.props.imageUrl}/>}
+                <button className="party-member-remove" onClick={this.props.onClick}/>
             </div>
         )
     }

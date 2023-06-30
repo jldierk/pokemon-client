@@ -10,13 +10,6 @@ class PokemonDetailView extends React.Component {
                 <div className={this.props.className} style={{border: "2px solid orange"}}>
                     <div style={{margin:"20px", color:"white"}}>{pokemon.name.english}</div>
                     <img src={pokemon.artworkUrl} width="200" height="200"></img>
-                    <div style={{display: "flex", justifyContent: "center"}}>
-                        <PkmnType type={pokemon.type[0].toLowerCase()}/>
-                        {
-                            pokemon.type[1] && <PkmnType type={pokemon.type[1].toLowerCase()}/>
-                        }
-                        
-                    </div>
                 </div>       
             )
         } else {

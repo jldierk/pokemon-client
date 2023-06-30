@@ -17,6 +17,11 @@
     color: #11151c;
 }
 
+.pokemon-button:active {
+    background-color: #1b765d;
+    transition: none;
+}
+
 .pokemon-button td {
     display: inline-flex;
     padding-left:5px;
@@ -42,6 +47,7 @@
     width: 100%;
     border-radius: 50%;
     z-index: 0;
+    outline: 2px solid #262f42;
 }
 
 .party-member-icon {
@@ -62,6 +68,7 @@
     opacity: 0;
     z-index: 2;
     border-radius: 50%;
+    border: none;
 }
 
 .party-member-remove:hover {
@@ -69,11 +76,12 @@
     transition: all .5s ease;
 }
 
-.add-to-party {
+.action-button {
     background-color: #ea5d5d;
     height: 50px;
     width: 125px;
-    border-radius: 25px;
+    border: none;
     color: white;
     font-weight: bold;
+    border-radius: 5px;
 }
