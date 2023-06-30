@@ -1,5 +1,4 @@
 import React from "react";
-import SelectedPokemon from "./SelectedPokemon";
 
 class Party extends React.Component {
     render() {
@@ -22,7 +21,7 @@ class Party extends React.Component {
             }
         }
         return (        
-            <div>            
+            <div style={{display:"flex", justifyContent: "space-evenly", flexFlow:"wrap"}}>            
                 <SelectedPokemon imageUrl={pokemon0} onClick={removeFunc.bind(this, 0)}/>
                 <SelectedPokemon imageUrl={pokemon1} onClick={removeFunc.bind(this, 1)}/>
                 <SelectedPokemon imageUrl={pokemon2} onClick={removeFunc.bind(this, 2)}/>
@@ -32,7 +31,16 @@ class Party extends React.Component {
             </div>
         )
     }
+}
 
+const SelectedPokemon = (props) => {
+    return (
+        <div className="party-member-container">
+            <div className="party-member-background"/>
+            {props.imageUrl && <img className="party-member-icon" src={props.imageUrl}/>}
+            {props.imageUrl && <button className="party-member-remove" onClick={props.onClick}/>}
+        </div>
+    )
 }
 
 export default Party;

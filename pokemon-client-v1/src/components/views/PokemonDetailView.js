@@ -1,6 +1,4 @@
 import React from 'react';
-import {motion} from 'framer-motion';
-import PkmnType from './PkmnType.js';
 
 class PokemonDetailView extends React.Component {
     render() {

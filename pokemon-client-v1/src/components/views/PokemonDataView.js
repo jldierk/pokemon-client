@@ -1,5 +1,5 @@
 import React from "react";
-import PkmnType from "./PkmnType";
+import PkmnType from "../PkmnType";
 
 class PokemonDataView extends React.Component {
     render() {    
