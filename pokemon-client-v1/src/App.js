@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native-web';
 import './App.css';
 import PokemonButton from './components/PokemonButton.js'
-import PokemonDetailView from './components/views/PokemonDetailView';
-import ActionButton from './components/ActionButton';
-import Party from './components/Party';
 import './styles/common.css'
 import pokeball from './images/pokeball.png';
 import PokemonFilter from './components/ChoiceFilter';
-import PokemonDataView from './components/views/PokemonDataView';
+import PartyRow from './components/views/PartyRow';
+import PokemonSelectionView from './components/views/PokemonSelectionView';
+import PartyAnalysisView from './components/views/PartyAnalysisView';
 
 function App() {
   const POKEMON_VIEW = "POKEMON_VIEW";
   const PARTY_VIEW = "PARTY_VIEW";
-  const [viewMode, setViewMode] = useState("detail");
+
+  const [viewMode, setViewMode] = useState("POKEMON_VIEW");
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(false);
   const [party, setParty] = useState([]);
+  const [analyzedParty, setAnalyzedParty] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -70,6 +71,25 @@ function App() {
     && (searchKey == "" || regex.test(test.name.english));
   }
 
+  function analyzeParty() {
+    setLoading(true);
+    setViewMode(PARTY_VIEW);
+    let partyNums = party.map(function (pokemon) {return pokemon.number;});
+    const requestOptions = {    
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pokemonNumbers: partyNums })
+  };
+    fetch('api/v1/party/analyze', requestOptions)
+      .then(response=>response.json())
+      .then(data=> {
+        setAnalyzedParty(data);
+        setLoading(false);
+        console.log("got party " + JSON.stringify(data));
+      })
+      .catch(err => {console.log("Error " + err.json)});      
+  }
+
   useEffect(() => {
     setLoading(true);
     
@@ -93,9 +113,9 @@ function App() {
 
   let detailContent;
   if (viewMode == POKEMON_VIEW) {
-    detailContent = <PokemonView detailHidden={detailHidden} addToPartyFunc={addToParty} selectedPokemon={selectedPokemon}/>
+    detailContent = <PokemonSelectionView detailHidden={detailHidden} addToPartyFunc={addToParty} selectedPokemon={selectedPokemon}/>
   } else {
-    detailContent = <PartyView/>
+    detailContent = <PartyAnalysisView/>
   }
 
   return (
@@ -132,22 +152,10 @@ function App() {
         <div class="column" style={{height: "100%"}}>
           <div style={{display: "flex", flexFlow: "column", minHeight: "100vh"}}>
             <Banner/>
-            <div style={{display: "flex", flex:"1", border: "2px solid blue", alignItems:"center"}}>            
+            <div style={{display: "flex", flex:"1", alignItems:"center"}}>            
               {detailContent}
-            </div>
-            <div style={{marginBottom: "20px", minHeight:"140px", border: "2px solid yellow"}}>
-              <div style={{color: "white", textAlign: "left", padding: "10px"}}>
-                Your Party
-              </div>
-              <div style={{display: "flex", justifyContent:"space-between", alignItems: "center"}}>
-                <div style={{marginLeft: "20px", flex:8}}>
-                  <Party party={party} removeFunc={removeFromParty}/>                  
-                </div>          
-                <div style={{marginRight: "20px", marginLeft: "20px", verticalAlign: "center", flex:1}}>
-                    <ActionButton text="Analyze" onClick={()=>setViewMode(PARTY_VIEW)}/>
-                </div>
-              </div>            
-            </div>        
+            </div>  
+            {viewMode == "POKEMON_VIEW" && <PartyRow onAnalyze={analyzeParty} removeFromParty={removeFromParty} party={party}/>}
           </div>          
         </div>
       </div>
@@ -157,39 +165,11 @@ function App() {
 
 const Banner = () => {
   return (
-    <div style={{fontSize: "50px", color: "white", border: "2px solid red", flex: "0 1 auto"}}>
+    <div style={{fontSize: "50px", color: "white", flex: "0 1 auto"}}>
       <span><img src={pokeball} style={{height: "50px", marginRight: "10px"}}/></span>
       <span>Pokemon Party Creator</span>
       <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>
     </div>
-  )
-}
-
-const PokemonView = (props) => {
-  var detailHidden = props.detailHidden;
-  var selectedPokemon = props.selectedPokemon;
-  var addToParty = props.addToPartyFunc;
-
-  return (
-    <div style={{display:"flex", flex:"1", border:"2px solid green", justifyContent: "space-evenly"}}>
-      <div style={{flex:"1"}}>
-        <PokemonDetailView className={detailHidden} pokemon={selectedPokemon}/>
-        <div style={{paddingTop: "20px"}}>
-          {selectedPokemon != "" && <ActionButton onClick={addToParty.bind(this, selectedPokemon)} text="Add To Party"/>}
-        </div>                
-      </div>
-      <div style={{flex:"1", display: "flex",border: "2px solid orange", flex:"1", justifyContent:"center", alignItems: "center"}}>
-        {selectedPokemon != "" && <PokemonDataView pokemon={selectedPokemon}/>}
-      </div>
-    </div>  
-  )
-}
-
-const PartyView = () => {
-  return (
-    <div style={{display:"flex", color: "white"}}>
-      This is a test
-    </div>  
   )
 }
 
