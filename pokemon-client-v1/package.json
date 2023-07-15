@@ -2,7 +2,7 @@
   "name": "pokemon-client-v1",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://backend:8080",
+  "proxy": "https://pokemon-party-app.herokuapp.com/",
   "homepage": "https://jldierk.github.io/pokemon-client",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
