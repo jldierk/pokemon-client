@@ -4,14 +4,23 @@ span {
     line-height: normal;
 }
 
-.type-icon {
+.type-icon-lg {
     text-align: middle;
-    border-radius: 5;
+    color: aliceblue;
+    border-radius: 10px;
     width: 90px;
     height: 30px;
     line-height: 30px;
+}
+
+.type-icon-sm {
+    text-align: middle;
     color: aliceblue;
-    border-radius: 10px;
+    border-radius: 7px;
+    width: 50px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 10px;
 }
 
 .type-ground {

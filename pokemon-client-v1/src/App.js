@@ -100,6 +100,9 @@ function App() {
       .then(data => {
         setPokemon(data);
         setLoading(false);
+
+        //TODO: Delete
+        setParty([data[103],data[409],data[230],data[67],data[652],data[90]])
       })
       .catch(err => {console.log("Error " + err.json)})
   }, []);
@@ -115,7 +118,7 @@ function App() {
   if (viewMode == POKEMON_VIEW) {
     detailContent = <PokemonSelectionView detailHidden={detailHidden} addToPartyFunc={addToParty} selectedPokemon={selectedPokemon}/>
   } else {
-    detailContent = <PartyAnalysisView/>
+    detailContent = <PartyAnalysisView party={analyzedParty}/>
   }
 
   return (
