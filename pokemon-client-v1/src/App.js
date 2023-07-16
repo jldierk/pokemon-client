@@ -93,9 +93,9 @@ function App() {
   useEffect(() => {
     setLoading(true);
     
-    // var url = process.env.REACT_APP_API_URL + 'api/v1/pokemon';
+    var url = process.env.REACT_APP_API_URL + 'api/v1/pokemon';
     // console.log("url: " + url);
-    fetch('api/v1/pokemon')
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         setPokemon(data);
