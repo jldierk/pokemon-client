@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "7e492c2ca22a1dde5db0",
+    "revision": "e97ff2ec72c444226e39",
     "url": "/pokemon-client/static/css/main.6ed6de40.chunk.css"
   },
   {
-    "revision": "7e492c2ca22a1dde5db0",
-    "url": "/pokemon-client/static/js/main.7e492c2c.chunk.js"
+    "revision": "e97ff2ec72c444226e39",
+    "url": "/pokemon-client/static/js/main.e97ff2ec.chunk.js"
   },
   {
     "revision": "5cc4c16838a79a03d25d",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/pokemon-client/static/media/pokeball.5a9302e4.png"
   },
   {
-    "revision": "fc1977999fe0032030b16019bdcc7183",
+    "revision": "45ba90e7597740abeb1473ed0160d149",
     "url": "/pokemon-client/index.html"
   }
 ];
