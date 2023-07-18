@@ -4,6 +4,15 @@ span {
     line-height: normal;
 }
 
+.move {
+    border-radius: 7px;
+}
+
+.move:hover {
+    background-color: rgba(204, 204, 204, 0.5);
+    transition: all .5s ease;
+}
+
 .type-icon-lg {
     text-align: middle;
     color: aliceblue;
@@ -17,9 +26,9 @@ span {
     text-align: middle;
     color: aliceblue;
     border-radius: 7px;
-    width: 50px;
-    height: 15px;
-    line-height: 15px;
+    width: 80px;
+    height: 18px;
+    line-height: 18px;
     font-size: 10px;
 }
 
@@ -79,8 +88,8 @@ span {
 }
 
 .type-normal {
-    background-color: #cccccc;
-    outline: 2px solid #a7a7a7;
+    background-color: #848484;
+    outline: 2px solid #4a4a4a;
 }
 
 .type-fairy {
@@ -94,8 +103,8 @@ span {
 }
 
 .type-steel {
-    background-color: #dcdcdc;
-    outline: 2px solid #b7b7b7;
+    background-color: #b9b9b9;
+    outline: 2px solid #868686;
 }
 
 .type-dragon {

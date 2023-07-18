@@ -23,11 +23,11 @@ class StatView extends React.Component {
 function StatBar(props) {
     var fillWidthProportion = props.statVal / 255;
     return(
-        <div style={{display: "flex", width: "200px", margin: "2px 0px 2px 0px"}}>
-            <div style={{width: "100px", textAlign:"right"}}>{props.name}: </div>
-            <div style={{flex:1, position: "relative", display: "flex", alignItems: "stretch", paddingLeft: "5px", paddingRight:"5px"}}>
-                <div style={{position: "absolute", backgroundColor: props.color, borderRadius: "5px", opacity:.2, height: "20px", width: "100px"}}/>
-                <div class="stat-bar" style={{position: "absolute", backgroundColor: props.color, borderRadius: "5px", height: "20px", width: 100*fillWidthProportion, border:"1px solid #161b24"}}/>
+        <div style={{display: "flex", width: "250px", margin: "2px 0px 2px 0px"}}>
+            <div style={{width: "120px", textAlign:"right"}}>{props.name}: </div>
+            <div style={{flex:1, position: "relative", display: "flex", alignItems: "stretch", paddingLeft: "5px", paddingRight:"5px", height:"20px"}}>
+                <div style={{position: "absolute", backgroundColor: props.color, borderRadius: "5px", opacity:.2, height: "20px", width: "130px"}}/>
+                <div class="stat-bar" style={{position: "absolute", backgroundColor: props.color, borderRadius: "5px", height: "20px", width: 130*fillWidthProportion, border:"1px solid #161b24"}}/>
             </div>
         </div>
     )

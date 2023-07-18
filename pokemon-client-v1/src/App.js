@@ -23,6 +23,7 @@ function App() {
   const [typeFilter, setTypeFilter] = useState("");
   const [generationFilter, setGenerationFilter] = useState("");
   const [selectionOpacity, setSelectionOpacity] = useState(false);
+  const BACKEND_BASE_URL =  process.env.REACT_APP_API_URL;
 
   function updateSelected(pokemon) {
     if (viewMode != POKEMON_VIEW) {
@@ -57,7 +58,13 @@ function App() {
   function handleTypeChange(event) {
     var type = event.target.value;
     console.log("Filtering by " + type);
-    setTypeFilter(type);
+    setTypeFilter(type.toUpperCase());
+  }
+
+  function handleGenerationChange(event) {
+    var generation = event.target.value;
+    console.log("Filtering by " + generation);
+    setGenerationFilter(generation);
   }
 
   function handleSearchChange(event) {
@@ -68,7 +75,8 @@ function App() {
   function matchFilters(test) {
     var regex = new RegExp(searchKey, "i");
     return (typeFilter == "" || typeFilter == test.type[0] || typeFilter == test.type[1])
-    && (searchKey == "" || regex.test(test.name.english));
+            && (searchKey == "" || regex.test(test.name.english))
+            && (generationFilter == "" || generationFilter == test.generation);
   }
 
   function analyzeParty() {
@@ -79,8 +87,9 @@ function App() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ pokemonNumbers: partyNums })
-  };
-    fetch('api/v1/party/analyze', requestOptions)
+    };
+    let url = BACKEND_BASE_URL + 'api/v1/party/analyze';
+    fetch(url, requestOptions)
       .then(response=>response.json())
       .then(data=> {
         setAnalyzedParty(data);
@@ -93,8 +102,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     
-    var url = process.env.REACT_APP_API_URL + 'api/v1/pokemon';
-    // console.log("url: " + url);
+    var url = BACKEND_BASE_URL + 'api/v1/pokemon';
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -134,7 +142,7 @@ function App() {
                     <input style={{width: "100px", backgroundColor: "#161b24", color: "white", appearance: "none", border: "1px solid rgb(118, 118, 118)", height: "25px", borderRadius: "5px"}} onChange={handleSearchChange.bind(this)}/>
                   </span>   
               </div>
-              <PokemonFilter name="Generation:" values={["1","2","3","4","5","6","7","8","9"]} onChange={handleTypeChange}/>
+              <PokemonFilter name="Generation:" values={["1","2","3","4","5","6","7","8","9"]} onChange={handleGenerationChange}/>
               <PokemonFilter name="Type:" values={["Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dark","Dragon","Steel","Fairy"]} onChange={handleTypeChange}/>
             </div>         
             <div style={{flexShrink: "0", height: "2px", width: "100%", backgroundColor:"#262f42", margin: "10px 0px 10px 0px"}}></div>
@@ -168,7 +176,7 @@ function App() {
 
 const Banner = () => {
   return (
-    <div style={{fontSize: "50px", color: "white", flex: "0 1 auto"}}>
+    <div style={{fontSize: "35px", color: "white", flex: "0 1 auto"}}>
       <span><img src={pokeball} style={{height: "50px", marginRight: "10px"}}/></span>
       <span>Pokemon Party Creator</span>
       <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>
