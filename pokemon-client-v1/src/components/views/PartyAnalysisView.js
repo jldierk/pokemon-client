@@ -68,9 +68,9 @@ function MoveDescription(props) {
             <div style={{display: "flex", alignItems:"center", padding: "2px", paddingRight: "10px"}}>{moveName}</div>
             <span className={`tooltip-content`}>
                 <div style={{marginBottom: "10px", textAlign: "left"}}>{move.effectEntry}</div>
-                <div>Power: {move.power}</div>
+                {move.power && <div>Power: {move.power}</div>}
                 <div>PP: {move.pp}</div>
-                <div>Accuracy: {move.accuracy}</div>
+                {move.accuracy && <div>Accuracy: {move.accuracy}</div>}
             </span>
         </div>
     )

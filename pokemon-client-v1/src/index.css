@@ -27,6 +27,10 @@ select {
   box-sizing: border-box;
 }
 
+p {
+  color: white;
+}
+
 @font-face {
   font-family: pokemonFont;
   src: url(./fonts/PKMN\ RBYGSC.ttf);

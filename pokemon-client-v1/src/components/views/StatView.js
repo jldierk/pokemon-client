@@ -5,7 +5,7 @@ class StatView extends React.Component {
     render() {    
         var pokemon = this.props.pokemon;
         return (
-            <div className="stat-view">
+            <div className="desc-box">
                 <div style={{textAlign:"left", padding: "8px"}}>Stats</div>
                 <div style={{display: "flex", alignItems: "center", flexDirection:"column", padding: "15px"}}>
                     <StatBar name="HP" color="red" statVal={pokemon.stats.hp}/>

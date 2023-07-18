@@ -30,6 +30,11 @@ function App() {
       setSelectedPokemon(pokemon);
       setViewMode(POKEMON_VIEW);
     } else if (selectedPokemon != null && selectedPokemon != "") {
+      if (selectedPokemon == pokemon) {
+        addToParty(pokemon);
+        return;
+      } 
+
       setSelectionOpacity(true);        
       setTimeout(() => {
         setSelectedPokemon(pokemon);
@@ -40,12 +45,12 @@ function App() {
     }
   }
 
-  function addToParty(pokemonName) {
-    console.log("Adding " + pokemonName + ", party size is " + [party.length]);
+  function addToParty(pokemon) {
+    console.log("Adding " + pokemon + ", party size is " + [party.length]);
     if (party.length > 5) {
       console.log("too many in party");
     } else {
-      setParty(party => [...party, pokemonName]);
+      setParty(party => [...party, pokemon]);
     }
   }
 
@@ -115,15 +120,13 @@ function App() {
       .catch(err => {console.log("Error " + err.json)})
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
   var detailHidden = selectionOpacity ? "hide" : "show";
   console.log("detail hidden: " + detailHidden);
 
   let detailContent;
-  if (viewMode == POKEMON_VIEW) {
+  if (loading) {
+    detailContent = <p>Loading...</p>;
+  } else if (viewMode == POKEMON_VIEW) {
     detailContent = <PokemonSelectionView detailHidden={detailHidden} addToPartyFunc={addToParty} selectedPokemon={selectedPokemon}/>
   } else {
     detailContent = <PartyAnalysisView party={analyzedParty}/>
@@ -176,7 +179,7 @@ function App() {
 
 const Banner = () => {
   return (
-    <div style={{fontSize: "35px", color: "white", flex: "0 1 auto"}}>
+    <div style={{fontSize: "35px", color: "white", flex: "0 1 auto", padding: "35px"}}>
       <span><img src={pokeball} style={{height: "50px", marginRight: "10px"}}/></span>
       <span>Pokemon Party Creator</span>
       <span><img src={pokeball} style={{height: "50px", marginLeft: "10px"}}/></span>

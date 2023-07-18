@@ -48,8 +48,11 @@ function PokemonDataView(props) {
                     pokemon.type[1] && <PkmnType type={pokemon.type[1].toLowerCase()}/>
                 }       
             </div>
-            <div><span>Generation:</span><span></span></div>
-            <div><span>Description:</span><span></span></div>
+            <div className='desc-box'><span>Generation: {pokemon.generation}</span></div>
+            <div className='desc-box'>
+                <div><span>Height: {pokemon.height}</span><span></span></div>
+                <div><span>Weight: {pokemon.weight}</span><span></span></div>
+            </div>
             <StatView pokemon={pokemon}/>
         </div>       
     )
